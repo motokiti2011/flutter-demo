@@ -6,7 +6,8 @@ import 'package:http/http.dart' as http;
 
 class ApiClient {
   Future<List<Product>?> fetchProducts() async {
-    final url = Uri.parse('http://123.45.678.9:8080/HomeList');
+    final url =
+        Uri.parse('https://hausn48fya.execute-api.us-east-1.amazonaws.com/dev');
     try {
       final response = await http.get(url);
       if (response.statusCode == 200) {
