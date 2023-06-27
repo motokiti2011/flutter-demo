@@ -11,6 +11,7 @@ class HomePage extends StatelessWidget {
 
   List<Product> products = [];
   dynamic category = 'food';
+  String? isSelectedItem = 'aaa';
 
   Future getHomes() async {
     products = (await homeViewModel.fetchProducts(category))!;
@@ -44,6 +45,44 @@ class HomePage extends StatelessWidget {
             );
           }
         },
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              //3
+              DropdownButton(
+                //4
+                items: const [
+                  //5
+                  DropdownMenuItem(
+                    child: Text('aaa'),
+                    value: 'aaa',
+                  ),
+                  DropdownMenuItem(
+                    child: Text('bbb'),
+                    value: 'bbb',
+                  ),
+                  DropdownMenuItem(
+                    child: Text('ccc'),
+                    value: 'ccc',
+                  ),
+                ],
+                //6
+                onChanged: (String? value) {
+                  // setState(() {
+                  //   isSelectedItem = value;
+                  // });
+                },
+                //7
+                value: isSelectedItem,
+              ),
+              const SizedBox(
+                height: 32,
+              ),
+              Text('$isSelectedItem が選択されました。')
+            ],
+          ),
+        ),
       ),
     );
   }
