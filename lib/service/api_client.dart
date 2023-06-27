@@ -5,11 +5,11 @@ import 'package:flutter_demo_rest_api/model/product.dart';
 import 'package:http/http.dart' as http;
 
 class ApiClient {
-  Future<List<Product>?> fetchProducts() async {
+  Future<List<Product>?> fetchProducts(category) async {
     final url = Uri.parse(
         'https://hausn48fya.execute-api.us-east-1.amazonaws.com/dev/productlist');
 
-    var request = new SampleRequest(query: 'QUERY', category: 'food');
+    var request = new ProductListRequest(query: 'QUERY', category: category);
 
     try {
       final response = await http.post(url,
@@ -31,10 +31,10 @@ class ApiClient {
   }
 }
 
-class SampleRequest {
+class ProductListRequest {
   final String query;
   final String category;
-  SampleRequest({
+  ProductListRequest({
     required this.query,
     required this.category,
   });

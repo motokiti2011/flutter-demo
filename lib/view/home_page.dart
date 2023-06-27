@@ -10,8 +10,10 @@ class HomePage extends StatelessWidget {
   final HomeViewModel homeViewModel = HomeViewModel();
 
   List<Product> products = [];
+  dynamic category = 'food';
+
   Future getHomes() async {
-    products = (await homeViewModel.fetchProducts())!;
+    products = (await homeViewModel.fetchProducts(category))!;
   }
 
   @override
