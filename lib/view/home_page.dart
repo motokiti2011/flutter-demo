@@ -6,9 +6,7 @@ import '../view_model/Home_viewmodel.dart';
 // ignore: must_be_immutable
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
-
   final HomeViewModel homeViewModel = HomeViewModel();
-
   var selectedValue = "orange";
   final lists = <String>["orange", "apple", "strawberry", "banana", "grape"];
 
@@ -34,51 +32,18 @@ class HomePage extends StatelessWidget {
             // child: Column(
             child: DropdownButton<String>(
               value: selectedValue,
-              items: lists
-                  .map((String list) =>
-                      DropdownMenuItem(value: list, child: Text(list)))
-                  .toList(),
+              items: lists.map((String list) {
+                return DropdownMenuItem(
+                  value: list,
+                  child: Text(list),
+                );
+              }).toList(),
               onChanged: (String? value) {
-                // setState(() {
-                selectedValue = value!;
-                // });
+                setState(() {
+                  selectedValue = value!;
+                });
               },
             ),
-
-            // mainAxisAlignment: MainAxisAlignment.center,
-            // children: [
-            //   //3
-            //   DropdownButton(
-            //     //4
-            //     value: isSelectedItem,
-            //     items: const [
-            //       //5
-            //       DropdownMenuItem(
-            //         child: Text('aaa'),
-            //         value: 'aaa',
-            //       ),
-            //       DropdownMenuItem(
-            //         child: Text('bbb'),
-            //         value: 'bbb',
-            //       ),
-            //       DropdownMenuItem(
-            //         child: Text('ccc'),
-            //         value: 'ccc',
-            //       ),
-            //     ],
-            //     //6
-            //     onChanged: (String? value) {
-            //       // setState(() {
-            //       isSelectedItem = value;
-            //       // });
-            //     },
-            //   ),
-            //   const SizedBox(
-            //     height: 32,
-            //   ),
-            //   Text('$isSelectedItem が選択されました。')
-            // ],
-            // ),
           ),
           Container(
             height: 200,
