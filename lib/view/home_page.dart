@@ -9,6 +9,9 @@ class HomePage extends StatelessWidget {
 
   final HomeViewModel homeViewModel = HomeViewModel();
 
+  var selectedValue = "orange";
+  final lists = <String>["orange", "apple", "strawberry", "banana", "grape"];
+
   List<Product> products = [];
   dynamic category = 'food';
   String? isSelectedItem = 'aaa';
@@ -28,41 +31,54 @@ class HomePage extends StatelessWidget {
           Container(
             height: 200,
             color: Colors.red,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                //3
-                DropdownButton(
-                  //4
-                  value: isSelectedItem,
-                  items: const [
-                    //5
-                    DropdownMenuItem(
-                      child: Text('aaa'),
-                      value: 'aaa',
-                    ),
-                    DropdownMenuItem(
-                      child: Text('bbb'),
-                      value: 'bbb',
-                    ),
-                    DropdownMenuItem(
-                      child: Text('ccc'),
-                      value: 'ccc',
-                    ),
-                  ],
-                  //6
-                  onChanged: (String? value) {
-                    // setState(() {
-                    isSelectedItem = value;
-                    // });
-                  },
-                ),
-                const SizedBox(
-                  height: 32,
-                ),
-                Text('$isSelectedItem が選択されました。')
-              ],
+            // child: Column(
+            child: DropdownButton<String>(
+              value: selectedValue,
+              items: lists
+                  .map((String list) =>
+                      DropdownMenuItem(value: list, child: Text(list)))
+                  .toList(),
+              onChanged: (String? value) {
+                // setState(() {
+                selectedValue = value!;
+                // });
+              },
             ),
+
+            // mainAxisAlignment: MainAxisAlignment.center,
+            // children: [
+            //   //3
+            //   DropdownButton(
+            //     //4
+            //     value: isSelectedItem,
+            //     items: const [
+            //       //5
+            //       DropdownMenuItem(
+            //         child: Text('aaa'),
+            //         value: 'aaa',
+            //       ),
+            //       DropdownMenuItem(
+            //         child: Text('bbb'),
+            //         value: 'bbb',
+            //       ),
+            //       DropdownMenuItem(
+            //         child: Text('ccc'),
+            //         value: 'ccc',
+            //       ),
+            //     ],
+            //     //6
+            //     onChanged: (String? value) {
+            //       // setState(() {
+            //       isSelectedItem = value;
+            //       // });
+            //     },
+            //   ),
+            //   const SizedBox(
+            //     height: 32,
+            //   ),
+            //   Text('$isSelectedItem が選択されました。')
+            // ],
+            // ),
           ),
           Container(
             height: 200,
