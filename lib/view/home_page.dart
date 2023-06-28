@@ -27,104 +27,72 @@ class HomePage extends StatelessWidget {
         children: [
           Container(
             height: 200,
-            color: Colors.blue,
+            color: Colors.red,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                //3
+                DropdownButton(
+                  //4
+                  value: isSelectedItem,
+                  items: const [
+                    //5
+                    DropdownMenuItem(
+                      child: Text('aaa'),
+                      value: 'aaa',
+                    ),
+                    DropdownMenuItem(
+                      child: Text('bbb'),
+                      value: 'bbb',
+                    ),
+                    DropdownMenuItem(
+                      child: Text('ccc'),
+                      value: 'ccc',
+                    ),
+                  ],
+                  //6
+                  onChanged: (String? value) {
+                    // setState(() {
+                    isSelectedItem = value;
+                    // });
+                  },
+                ),
+                const SizedBox(
+                  height: 32,
+                ),
+                Text('$isSelectedItem が選択されました。')
+              ],
+            ),
           ),
-          FutureBuilder(
-            future: getHomes(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: Text("LOADING"),
-                );
-              } else {
-                if (products.isEmpty) {
+          Container(
+            height: 200,
+            color: Colors.blueGrey,
+            child: FutureBuilder(
+              future: getHomes(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
-                    child: Text("NO DATA"),
+                    child: Text("LOADING"),
+                  );
+                } else {
+                  if (products.isEmpty) {
+                    return const Center(
+                      child: Text("NO DATA"),
+                    );
+                  }
+                  return ListView.builder(
+                    itemCount: products.length,
+                    itemBuilder: (context, index) => ListTile(
+                      title: Text(products[index].productName),
+                      subtitle: Text(products[index].productId),
+                    ),
                   );
                 }
-                return ListView.builder(
-                  itemCount: products.length,
-                  itemBuilder: (context, index) => ListTile(
-                    title: Text(products[index].productName),
-                    subtitle: Text(products[index].productId),
-                  ),
-                );
-              }
-            },
-          ),
-          ListView.builder(
-            itemCount: products.length,
-            itemBuilder: (context, index) => ListTile(
-              title: Text(products[index].productName),
-              subtitle: Text(products[index].productId),
+              },
             ),
           ),
         ],
       ),
-
-      // body: FutureBuilder(
-      //   future: getHomes(),
-      //   builder: (context, snapshot) {
-      //     if (snapshot.connectionState == ConnectionState.waiting) {
-      //       return const Center(
-      //         child: Text("LOADING"),
-      //       );
-      //     } else {
-      //       if (products.isEmpty) {
-      //         return const Center(
-      //           child: Text("NO DATA"),
-      //         );
-      //       }
-
-      //       return ListView.builder(
-      //         itemCount: products.length,
-      //         itemBuilder: (context, index) => ListTile(
-      //           title: Text(products[index].productName),
-      //           subtitle: Text(products[index].productId),
-      //         ),
-      //       );
-      //     }
-      //   },
-      // ),
     );
-
-    // body: Center(
-    //   child: Column(
-    //     mainAxisAlignment: MainAxisAlignment.center,
-    //     children: [
-    //       //3
-    //       DropdownButton(
-    //         //4
-    //         items: const [
-    //           //5
-    //           DropdownMenuItem(
-    //             child: Text('aaa'),
-    //             value: 'aaa',
-    //           ),
-    //           DropdownMenuItem(
-    //             child: Text('bbb'),
-    //             value: 'bbb',
-    //           ),
-    //           DropdownMenuItem(
-    //             child: Text('ccc'),
-    //             value: 'ccc',
-    //           ),
-    //         ],
-    //         //6
-    //         onChanged: (String? value) {
-    //           // setState(() {
-    //           //   isSelectedItem = value;
-    //           // });
-    //         },
-    //         //7
-    //         value: isSelectedItem,
-    //       ),
-    //       const SizedBox(
-    //         height: 32,
-    //       ),
-    //       Text('$isSelectedItem が選択されました。')
-    //     ],
-    //   ),
-    // ),
   }
 }
