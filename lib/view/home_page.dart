@@ -6,17 +6,16 @@ import '../view_model/Home_viewmodel.dart';
 // ignore: must_be_immutable
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
+
   final HomeViewModel homeViewModel = HomeViewModel();
-  var selectedValue = "orange";
-  final lists = <String>["orange", "apple", "strawberry", "banana", "grape"];
 
-  List<Product> products = [];
-  dynamic category = 'food';
-  String? isSelectedItem = 'aaa';
+  // List<Product> products = [];
+  // dynamic category = 'food';
+  // String? isSelectedItem = 'aaa';
 
-  Future getHomes() async {
-    products = (await homeViewModel.fetchProducts(category))!;
-  }
+  // Future getHomes() async {
+  //   products = (await homeViewModel.fetchProducts(category))!;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -29,18 +28,52 @@ class HomePage extends StatelessWidget {
           Container(
             height: 200,
             color: Colors.red,
-            // child: Column(
+            child: SelectBtnPage(),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class SelectBtnPage extends StatefulWidget {
+  const SelectBtnPage({Key? key}) : super(key: key);
+
+  @override
+  State<SelectBtnPage> createState() => _SelectBtnPageState();
+}
+
+class _SelectBtnPageState extends State<SelectBtnPage> {
+  var selectedValue = "food";
+  final lists = <String>["food", "chemicals", "autumn", "weapon"];
+
+  List<Product> products = [];
+  dynamic category = 'food';
+  String? isSelectedItem = 'aaa';
+
+  final HomeViewModel homeViewModel = HomeViewModel();
+  Future getHomes() async {
+    products = (await homeViewModel.fetchProducts(category))!;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: [
+          Container(
+            height: 200,
+            color: Colors.red,
             child: DropdownButton<String>(
               value: selectedValue,
-              items: lists.map((String list) {
-                return DropdownMenuItem(
-                  value: list,
-                  child: Text(list),
-                );
-              }).toList(),
+              items: lists
+                  .map((String list) =>
+                      DropdownMenuItem(value: list, child: Text(list)))
+                  .toList(),
               onChanged: (String? value) {
                 setState(() {
                   selectedValue = value!;
+                  category = selectedValue;
                 });
               },
             ),
