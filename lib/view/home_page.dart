@@ -2,20 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_demo_rest_api/model/product.dart';
 
 import '../view_model/Home_viewmodel.dart';
+import '../model/productCategory.dart';
 
 // ignore: must_be_immutable
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
 
   final HomeViewModel homeViewModel = HomeViewModel();
-
-  // List<Product> products = [];
-  // dynamic category = 'food';
-  // String? isSelectedItem = 'aaa';
-
-  // Future getHomes() async {
-  //   products = (await homeViewModel.fetchProducts(category))!;
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +19,8 @@ class HomePage extends StatelessWidget {
       body: Column(
         children: [
           Container(
-            height: 200,
-            color: Colors.red,
+            height: 500,
+            // color: Colors.red,
             child: SelectBtnPage(),
           ),
         ],
@@ -44,8 +37,13 @@ class SelectBtnPage extends StatefulWidget {
 }
 
 class _SelectBtnPageState extends State<SelectBtnPage> {
-  var selectedValue = "food";
-  final lists = <String>["food", "chemicals", "autumn", "weapon"];
+  var selectedValue = ProductCategory.food.name;
+  final lists = <String>[
+    ProductCategory.food.name,
+    ProductCategory.chemicals.name,
+    ProductCategory.autumn.name,
+    ProductCategory.weapon.name
+  ];
 
   List<Product> products = [];
   dynamic category = 'food';
@@ -73,7 +71,15 @@ class _SelectBtnPageState extends State<SelectBtnPage> {
               onChanged: (String? value) {
                 setState(() {
                   selectedValue = value!;
-                  category = selectedValue;
+                  if (selectedValue == ProductCategory.food.name) {
+                    category = ProductCategory.food;
+                  } else if (selectedValue == ProductCategory.chemicals.name) {
+                    category = ProductCategory.chemicals;
+                  } else if (selectedValue == ProductCategory.autumn.name) {
+                    category = ProductCategory.autumn;
+                  } else {
+                    category = ProductCategory.weapon;
+                  }
                 });
               },
             ),
