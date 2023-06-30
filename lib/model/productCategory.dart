@@ -6,12 +6,29 @@ enum ProductCategory {
 }
 
 extension CategoryExtension on ProductCategory {
-  static final names = {
-    ProductCategory.food: '食品',
-    ProductCategory.chemicals: '薬品',
-    ProductCategory.autumn: '武器',
-    ProductCategory.weapon: '防具'
-  };
+  String get name {
+    switch (this) {
+      case ProductCategory.food:
+        return '食品';
+      case ProductCategory.chemicals:
+        return '薬品';
+      case ProductCategory.autumn:
+        return '武器';
+      case ProductCategory.weapon:
+        return '防具';
+    }
+  }
 
-  String get typeName => names[this]!;
+  String get id {
+    switch (this) {
+      case ProductCategory.food:
+        return 'food';
+      case ProductCategory.chemicals:
+        return 'chemicals';
+      case ProductCategory.autumn:
+        return 'autumn';
+      case ProductCategory.weapon:
+        return 'weapon';
+    }
+  }
 }

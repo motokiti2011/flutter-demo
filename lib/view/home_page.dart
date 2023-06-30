@@ -72,13 +72,13 @@ class _SelectBtnPageState extends State<SelectBtnPage> {
                 setState(() {
                   selectedValue = value!;
                   if (selectedValue == ProductCategory.food.name) {
-                    category = ProductCategory.food;
+                    category = ProductCategory.food.id;
                   } else if (selectedValue == ProductCategory.chemicals.name) {
-                    category = ProductCategory.chemicals;
+                    category = ProductCategory.chemicals.id;
                   } else if (selectedValue == ProductCategory.autumn.name) {
-                    category = ProductCategory.autumn;
+                    category = ProductCategory.autumn.id;
                   } else {
-                    category = ProductCategory.weapon;
+                    category = ProductCategory.weapon.id;
                   }
                 });
               },
