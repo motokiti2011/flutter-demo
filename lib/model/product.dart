@@ -1,14 +1,14 @@
 import 'dart:convert';
 
 class Product {
-  final String productId;
-  final String productName;
-  final String productCategory;
-  final String productQuantity;
-  final String productExplanation;
-  final String productContributorId;
-  final String productContributor;
-  final String productImageUrl;
+  final String productId; // 商品ID
+  final String productName; // 商品名
+  final String productCategory; // 商品カテゴリー
+  final String productQuantity; // 商品数
+  final String productExplanation; // 商品説明
+  final String productContributorId; // 商品登録者ID
+  final String productContributor; // 商品登録者
+  final String productImageUrl; // 商品画像URL
 
   Product({
     required this.productId,

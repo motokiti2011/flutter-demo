@@ -3,6 +3,7 @@ import 'package:flutter_demo_rest_api/model/product.dart';
 
 import '../view_model/Home_viewmodel.dart';
 import '../model/productCategory.dart';
+import '../view/product_detail.dart';
 
 // ignore: must_be_immutable
 class HomePage extends StatelessWidget {
@@ -103,8 +104,16 @@ class _SelectBtnPageState extends State<SelectBtnPage> {
                   return ListView.builder(
                     itemCount: products.length,
                     itemBuilder: (context, index) => ListTile(
-                      title: Text(products[index].productName),
-                      subtitle: Text(products[index].productId),
+                      title: Text('商品名：' + products[index].productName),
+                      subtitle: Text('個数：' + products[index].productQuantity),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  ProductDetail(products[index].productId)),
+                        );
+                      },
                     ),
                   );
                 }

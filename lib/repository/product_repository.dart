@@ -5,4 +5,8 @@ class ProductRepository {
   dynamic fetchProducts(category) async {
     return await apiClient.fetchProducts(category);
   }
+
+  dynamic getProduct(productId) async {
+    return await apiClient.getProduct(productId);
+  }
 }
