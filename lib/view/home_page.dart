@@ -4,6 +4,7 @@ import 'package:flutter_demo_rest_api/model/product.dart';
 import '../view_model/Home_viewmodel.dart';
 import '../model/productCategory.dart';
 import '../view/product_detail.dart';
+import '../auth/cognito_info.dart';
 
 // ignore: must_be_immutable
 class HomePage extends StatelessWidget {
@@ -16,6 +17,30 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Home List"),
+        // 右側のアイコン一覧
+        actions: <Widget>[
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CognitoInfo()),
+              );
+            },
+            icon: Icon(Icons.account_circle),
+          ),
+        ],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: const [
+            DrawerHeader(
+                decoration: BoxDecoration(color: Colors.yellowAccent),
+                child: Text("My Home Page")),
+            ListTile(title: Text("menu1")),
+            ListTile(title: Text("menu2")),
+            ListTile(title: Text("menu3"))
+          ],
+        ),
       ),
       body: Column(
         children: [
