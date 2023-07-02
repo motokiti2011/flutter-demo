@@ -89,3 +89,7 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+  dependencies:
+  amazon_cognito_identity_dart_2: ^0.1.12+3
+
