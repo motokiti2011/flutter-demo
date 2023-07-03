@@ -1,7 +1,6 @@
 import 'dart:convert';
-
 import 'package:flutter_demo_rest_api/model/product.dart';
-
+import '../auth/cognito_info.dart';
 import 'package:http/http.dart' as http;
 
 class ApiClient {

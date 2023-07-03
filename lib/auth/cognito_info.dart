@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:amazon_cognito_identity_dart_2/cognito.dart';
 import '../view/home_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_demo_rest_api/model/product.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 final userPool =
     CognitoUserPool('us-east-1_s4LArrEvf', '78k9h6n05ov1agltr1frht7e5n');
@@ -351,4 +354,48 @@ class ConfirmRegistration extends StatelessWidget {
       );
     }
   }
+}
+
+class ApiClient {
+  Future<List<Product>?> getProduct(productId) async {
+    final url = Uri.parse(
+        'https://hausn48fya.execute-api.us-east-1.amazonaws.com/dev/productitem/postitem');
+
+    var request = new GetProductRequest(query: 'QUERY', productId: productId);
+
+    try {
+      final response = await http.post(
+          url,
+          body: json.encode(request.toJson()),
+          headers: {"Content-Type": "application/json"},
+          {'Authorization': session.getIdToken().getJwtToken()});
+      if (response.statusCode == 200) {
+        final List<dynamic> body = jsonDecode(response.body);
+        final List<Product> products =
+            body.map((dynamic product) => Product.fromJson(product)).toList();
+        return products;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      // ignore: avoid_print
+      print(e.toString());
+    }
+    return null;
+  }
+}
+
+class GetProductRequest {
+  final String query;
+  final String productId;
+  GetProductRequest({
+    required this.query,
+    required this.productId,
+  });
+  Map<String, dynamic> toJson() => {
+        'OperationType': query,
+        'Keys': {
+          'productId': productId,
+        }
+      };
 }
