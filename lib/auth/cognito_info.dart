@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:amazon_cognito_identity_dart_2/cognito.dart';
 import '../view/home_page.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final userPool =
     CognitoUserPool('us-east-1_s4LArrEvf', '78k9h6n05ov1agltr1frht7e5n');
 
-CognitoUserSession? session;
+// CognitoUserSession? session;
+// Cognito認証情報の受け渡しを行うためのProvider
+final session = StateProvider((ref) {
+  return CognitoUserSession;
+});
 
 class CognitoInfo extends StatelessWidget {
   @override
@@ -22,12 +27,12 @@ class CognitoInfo extends StatelessWidget {
   }
 }
 
-class CognitoInfoPage extends StatelessWidget {
+class CognitoInfoPage extends ConsumerWidget {
   final _mailAddressController = TextEditingController();
   final _passwordController = TextEditingController();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         // 左側のアイコン
@@ -83,7 +88,7 @@ class CognitoInfoPage extends StatelessWidget {
                 // color: Colors.indigo,
                 // shape: StadiumBorder(),
                 // textColor: Colors.white,
-                onPressed: () => _signIn(context),
+                onPressed: () => _signIn(context, ref),
               ),
             ),
             Divider(color: Colors.black),
@@ -107,13 +112,18 @@ class CognitoInfoPage extends StatelessWidget {
     );
   }
 
-  void _signIn(BuildContext context) async {
+  void _signIn(BuildContext context, WidgetRef ref) async {
     var cognitoUser = new CognitoUser(_mailAddressController.text, userPool);
     var authDetails = new AuthenticationDetails(
         username: _mailAddressController.text,
         password: _passwordController.text);
     try {
-      session = await cognitoUser.authenticateUser(authDetails);
+      var hoge = await cognitoUser.authenticateUser(authDetails);
+
+      ref.read(session.notifier).state = hoge as Type;
+      // context.read(session).state =
+      // await cognitoUser.authenticateUser(authDetails);
+      // session = await cognitoUser.authenticateUser(authDetails);
       Navigator.of(context).pushReplacementNamed('/TopPage');
     } catch (e) {
       await showDialog<int>(
