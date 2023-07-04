@@ -35,8 +35,8 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   http: ^0.13.6
-  amazon_cognito_identity_dart_2: ^3.4.0
-  flutter_riverpod: ^2.3.6
+  amazon_cognito_identity_dart_2: 
+  flutter_riverpod: 
 
 dev_dependencies:
   flutter_test:
