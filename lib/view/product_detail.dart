@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_demo_rest_api/model/product.dart';
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../view_model/product_viewmodel.dart';
 import '../model/productCategory.dart';
+import '../service/cognito_provider.dart';
+import 'package:amazon_cognito_identity_dart_2/cognito.dart';
 
 // ignore: must_be_immutable
-class ProductDetail extends StatelessWidget {
+class ProductDetail extends ConsumerWidget {
   // ProductDetail({Key? key}) : super(key: key);
   ProductDetail(this.productId);
   String productId;
@@ -13,12 +15,17 @@ class ProductDetail extends StatelessWidget {
   final ProductViewModel productViewModel = ProductViewModel();
 
   List<Product> products = [];
-  Future getHomes() async {
-    products = (await productViewModel.getProduct(productId))!;
-  }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    // ログイン状況確認
+    final cognito = ref.watch(sessionProvider);
+    var cognitoUser = cognito as CognitoUserSession;
+    var token = cognitoUser.getIdToken().getJwtToken();
+    Future getHomes() async {
+      products = (await productViewModel.getProduct(productId, token))!;
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("商品詳細"),

@@ -1,3 +1,4 @@
+import 'package:amazon_cognito_identity_dart_2/cognito.dart';
 import 'package:flutter_demo_rest_api/service/api_client.dart';
 
 class ProductRepository {
@@ -6,7 +7,7 @@ class ProductRepository {
     return await apiClient.fetchProducts(category);
   }
 
-  dynamic getProduct(productId) async {
-    return await apiClient.getProduct(productId);
+  dynamic getProduct(productId, CognitoJwtToken) async {
+    return await apiClient.getProduct(productId, CognitoJwtToken);
   }
 }

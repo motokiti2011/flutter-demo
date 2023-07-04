@@ -4,6 +4,8 @@ import '../view/home_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_demo_rest_api/model/product.dart';
 import 'dart:convert';
+import '../service/cognito_provider.dart';
+
 import 'package:http/http.dart' as http;
 
 final userPool =
@@ -121,9 +123,9 @@ class CognitoInfoPage extends ConsumerWidget {
         username: _mailAddressController.text,
         password: _passwordController.text);
     try {
-      var hoge = await cognitoUser.authenticateUser(authDetails);
+      var cognito = await cognitoUser.authenticateUser(authDetails);
 
-      ref.read(session.notifier).state = hoge as Type;
+      ref.read(sessionProvider.notifier).state = cognito as Type;
       // context.read(session).state =
       // await cognitoUser.authenticateUser(authDetails);
       // session = await cognitoUser.authenticateUser(authDetails);
@@ -354,48 +356,4 @@ class ConfirmRegistration extends StatelessWidget {
       );
     }
   }
-}
-
-class ApiClient {
-  Future<List<Product>?> getProduct(productId) async {
-    final url = Uri.parse(
-        'https://hausn48fya.execute-api.us-east-1.amazonaws.com/dev/productitem/postitem');
-
-    var request = new GetProductRequest(query: 'QUERY', productId: productId);
-
-    try {
-      final response = await http.post(
-          url,
-          body: json.encode(request.toJson()),
-          headers: {"Content-Type": "application/json"},
-          {'Authorization': session.getIdToken().getJwtToken()});
-      if (response.statusCode == 200) {
-        final List<dynamic> body = jsonDecode(response.body);
-        final List<Product> products =
-            body.map((dynamic product) => Product.fromJson(product)).toList();
-        return products;
-      } else {
-        return null;
-      }
-    } catch (e) {
-      // ignore: avoid_print
-      print(e.toString());
-    }
-    return null;
-  }
-}
-
-class GetProductRequest {
-  final String query;
-  final String productId;
-  GetProductRequest({
-    required this.query,
-    required this.productId,
-  });
-  Map<String, dynamic> toJson() => {
-        'OperationType': query,
-        'Keys': {
-          'productId': productId,
-        }
-      };
 }

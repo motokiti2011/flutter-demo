@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter_demo_rest_api/model/product.dart';
 import '../auth/cognito_info.dart';
+import '../service/cognito_provider.dart';
 import 'package:http/http.dart' as http;
 
 class ApiClient {
@@ -29,7 +30,7 @@ class ApiClient {
     return null;
   }
 
-  Future<List<Product>?> getProduct(productId) async {
+  Future<List<Product>?> getProduct(productId, JWTToken) async {
     final url = Uri.parse(
         'https://hausn48fya.execute-api.us-east-1.amazonaws.com/dev/productitem/postitem');
 
@@ -38,7 +39,10 @@ class ApiClient {
     try {
       final response = await http.post(url,
           body: json.encode(request.toJson()),
-          headers: {"Content-Type": "application/json"});
+          headers: {
+            "Content-Type": "application/json",
+            'Authorization': JWTToken
+          });
       if (response.statusCode == 200) {
         final List<dynamic> body = jsonDecode(response.body);
         final List<Product> products =
