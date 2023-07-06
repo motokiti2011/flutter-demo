@@ -17,3 +17,7 @@ import 'package:amazon_cognito_identity_dart_2/cognito.dart';
 final sessionProvider = StateProvider((ref) {
   return CognitoUserSession;
 });
+
+final tockenProvider = StateProvider((ref) {
+  return '';
+});

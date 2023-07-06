@@ -64,7 +64,7 @@ class CognitoInfoPage extends ConsumerWidget {
               child: TextField(
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: 'test@examle.com',
+                  hintText: 'ユーザーID',
                   labelText: 'ユーザーID',
                 ),
                 controller: _userIdController,
@@ -92,9 +92,6 @@ class CognitoInfoPage extends ConsumerWidget {
                       MaterialStateProperty.all<Color>(Colors.indigo),
                   // ↑< >に型を指定する
                 ),
-                // color: Colors.indigo,
-                // shape: StadiumBorder(),
-                // textColor: Colors.white,
                 onPressed: () => _signIn(context, ref),
               ),
             ),
@@ -107,11 +104,6 @@ class CognitoInfoPage extends ConsumerWidget {
                 // ↑< >に型を指定する
               ),
               onPressed: () => Navigator.of(context).pushNamed('/RegisterUser'),
-              // child: Text('新しいアカウントの作成'),
-              // color: Colors.indigo,
-              // textColor: Colors.white,
-              // shape: StadiumBorder(),
-              // onPressed: () => Navigator.of(context).pushNamed('/RegisterUser'),
             ),
           ],
         ),
@@ -120,13 +112,18 @@ class CognitoInfoPage extends ConsumerWidget {
   }
 
   void _signIn(BuildContext context, WidgetRef ref) async {
-    var cognitoUser = new CognitoUser(_mailAddressController.text, userPool);
+    var cognitoUser = new CognitoUser(_userIdController.text, userPool);
     var authDetails = new AuthenticationDetails(
         username: _userIdController.text, password: _passwordController.text);
     try {
       var cognito = await cognitoUser.authenticateUser(authDetails);
 
-      ref.read(sessionProvider.notifier).state = cognito as Type;
+      // ref.read(sessionProvider.notifier).state = cognito as CognitoUserSession;
+      var token = cognito?.idToken.jwtToken;
+      if (token != null) {
+        ref.read(tockenProvider.notifier).state = token;
+      }
+
       // context.read(session).state =
       // await cognitoUser.authenticateUser(authDetails);
       // session = await cognitoUser.authenticateUser(authDetails);

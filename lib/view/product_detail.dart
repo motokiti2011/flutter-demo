@@ -19,9 +19,11 @@ class ProductDetail extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // ログイン状況確認
-    final cognito = ref.watch(sessionProvider);
-    var cognitoUser = cognito as CognitoUserSession;
-    var token = cognitoUser.getIdToken().getJwtToken();
+    // final cognito = ref.watch(sessionProvider);
+    final token = ref.watch(tockenProvider);
+
+    // var cognitoUser = cognito as CognitoUserSession;
+    // var token = cognitoUser.getIdToken().getJwtToken();
     Future getHomes() async {
       products = (await productViewModel.getProduct(productId, token))!;
     }
