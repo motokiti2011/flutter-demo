@@ -127,7 +127,7 @@ class CognitoInfoPage extends ConsumerWidget {
       // context.read(session).state =
       // await cognitoUser.authenticateUser(authDetails);
       // session = await cognitoUser.authenticateUser(authDetails);
-      Navigator.of(context).pushReplacementNamed('/TopPage');
+      Navigator.of(context).pushReplacementNamed('/HomePage');
     } catch (e) {
       await showDialog<int>(
         context: context,
