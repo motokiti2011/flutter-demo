@@ -10,6 +10,7 @@ import 'package:http/http.dart' as http;
 
 final userPool =
     CognitoUserPool('us-east-1_s4LArrEvf', '78k9h6n05ov1agltr1frht7e5n');
+//  '[プールID ex. ap-northeast-1_XXXXXXXX]', '[アプリクライアントID]');
 
 // CognitoUserSession? session;
 // Cognito認証情報の受け渡しを行うためのProvider
@@ -34,6 +35,7 @@ class CognitoInfo extends StatelessWidget {
 
 class CognitoInfoPage extends ConsumerWidget {
   final _mailAddressController = TextEditingController();
+  final _userIdController = TextEditingController();
   final _passwordController = TextEditingController();
 
   @override
@@ -63,9 +65,9 @@ class CognitoInfoPage extends ConsumerWidget {
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'test@examle.com',
-                  labelText: 'メールアドレス',
+                  labelText: 'ユーザーID',
                 ),
-                controller: _mailAddressController,
+                controller: _userIdController,
               ),
             ),
             Padding(
@@ -120,8 +122,7 @@ class CognitoInfoPage extends ConsumerWidget {
   void _signIn(BuildContext context, WidgetRef ref) async {
     var cognitoUser = new CognitoUser(_mailAddressController.text, userPool);
     var authDetails = new AuthenticationDetails(
-        username: _mailAddressController.text,
-        password: _passwordController.text);
+        username: _userIdController.text, password: _passwordController.text);
     try {
       var cognito = await cognitoUser.authenticateUser(authDetails);
 
